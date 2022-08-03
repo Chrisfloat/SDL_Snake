@@ -51,10 +51,13 @@ public:
   std::vector<Object*>* getObjectList();
   void addObject(Object* object);
   void deleteObject(uint32_t ID);
+  uint32_t nextFreeID();
 
   bool getKeyStatus(SDL_Scancode scancode);
   bool getWindowEvent(SDL_WindowEventID event);
   //bool getEventStatus(SDL_Event event);
+
+  void setMinimumSize(uint32_t w, uint32_t h);
 };
 
 #endif

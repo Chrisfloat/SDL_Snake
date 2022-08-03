@@ -13,6 +13,7 @@ Window::Window(std::string Title, uint32_t windowPosX, uint32_t windowPosY, uint
   objectList = new std::vector<Object*>();
   events = new std::vector<SDL_Event>();
   FPS = 60;
+
 }
 
 Window::~Window(){
@@ -101,6 +102,11 @@ void Window::deleteObject(uint32_t ID){
     }
 }
 
+uint32_t Window::nextFreeID(){
+  if(objectList->empty()) return 0;
+  return objectList->at(objectList->size()-1)->getID()+1;
+}
+
 bool Window::getKeyStatus(SDL_Scancode scancode){
   for(int i = 0; i<events->size(); i++){
     if(events->at(i).key.keysym.scancode == scancode)
@@ -110,7 +116,8 @@ bool Window::getKeyStatus(SDL_Scancode scancode){
 }
 
 bool Window::getWindowEvent(SDL_WindowEventID event){
-  for(int i = 0; i<events->size(); i++){
+  //here the this pointer goes from (some mem address) to 0x0
+  for(int i = 0; i<this->events->size(); i++){
     if(events->at(i).window.event == event)
       return true;
   }
@@ -127,3 +134,8 @@ bool Window::getEventStatus(SDL_Event event){
   return false;
 }
 */
+
+
+void Window::setMinimumSize(uint32_t w, uint32_t h){
+  SDL_SetWindowMinimumSize(sdlWindow, w, h);
+}
